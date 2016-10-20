@@ -4,6 +4,8 @@ import { AppComponent } from './app.component';
 import { TestBed }      from '@angular/core/testing';
 
 import { By }           from '@angular/platform-browser';
+import {mock, when, instance} from 'ts-mockito';
+import {SampleService} from './SampleService';
 
 ////////  SPECS  /////////////
 
@@ -25,6 +27,18 @@ describe('AppComponent with TCB', function () {
   });
 
   it('should have expected <h1> text', () => {
+    // Create mock
+    let sampleServiceMock: SampleService = mock(SampleService);
+
+    // stub method
+    when(sampleServiceMock.sampleMethod()).thenReturn('fakeMessage');
+
+    // Get instance from mock
+    let sampleService = instance(sampleServiceMock);
+
+    // output 'fakeMessage'
+    console.log(sampleService.sampleMethod());
+
     let fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
 
